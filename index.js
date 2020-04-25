@@ -25,7 +25,7 @@ if(os.type().toLowerCase().includes("windows")){
 }
 else if(os.type().toLowerCase().includes("linux")){
   console.error("linux environment ")
-  fpcalc=`./-fpcalc/fpcalc`
+  fpcalc=`fpcalc`
 }
 else{
   console.error("\n\n/t fffffrfdj")
