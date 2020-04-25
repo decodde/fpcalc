@@ -15,15 +15,15 @@ app.use((req, res, next)=> {
   res.header("Access-Control-Allow-Methods","PUT,DELETE,POST,GET")
   next();
 });
-
+var osType=os.type().toLowerCase()
 
 var fpcalc;
-if(os.type().toLowerCase().includes("windows")){
+if(osType.includes("windows")){
   console.log("windows environment")
   console.error("\n\n/t fffffrfdj")
   fpcalc=`./-fpcalc/fpcalc.exe`
 }
-else if(os.type().toLowerCase().includes("linux")){
+else if(osType.includes("linux")){
   console.error("linux environment ")
   fpcalc=`fpcalc`
 }
@@ -66,11 +66,23 @@ app.get("/getFingerprint/:length",async(req,res)=>{
   var {length,type,file}=fileOpt
   type?type=type:type="json"
   try{
+    if (osType.includes("windows") ){
       spawn(`${fpcalc}`,["-length",`${length}`,`-${type}`,`${file}`],(err,stdout,stderr)=>{
         if(stderr) res.json({type:"error",msg:"Couldnt get fingerprint",err:stderr})
-        else if(stdout) res.json({type:"success",msg:"Audio Fingerprint compplete",result:stdout})
+        else if(stdout) res.json({type:"success",msg:"Audio Fingerprint complete",result:stdout})
         else console.error(err)
       })
+    }
+    else if(osType.includes("linux")){
+      spawn(`${fpcalc}`,["--length",`${length}`,`${file}`],(err,stdout,stderr)=>{
+        if(stderr) res.json({type:"error",msg:"Couldnt get fingerprint",err:stderr})
+        else if(stdout) res.json({type:"success",msg:"Audio Fingerprint complete",result:stdout})
+        else console.error(err)
+      })
+    }
+    else{
+      res.json({type:"error",msg:"Dont know what to do"})
+    }
   }
   catch(err){
     console.error(err)
