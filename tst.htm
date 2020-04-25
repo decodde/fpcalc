@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html(lang="en")>
+    <body>
+        <form name="t" action='/api/t/post' method="POST" enctype="multipart/form-data">
+            <input id="p" type='file' name="photo" required>
+            <input type="text" value="stectckwhfwlfwf" name="des">
+            <button type="submit"> Submit</button>
+        </form>
+<script type="text/javascript">
+    document.t.onsubmit=async (e)=>{
+        e.preventDefault()
+        var opt={
+            method:"POST",
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        }
+        var d=await fetch("http://localhost:9678/t",opt).then(r=>r.json()).then(r=>console.log(r))
+        console.log(d)
+    }
+</script>
+</body>
+</html>
