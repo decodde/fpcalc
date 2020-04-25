@@ -31,7 +31,7 @@ else{
   console.error("\n\n/t fffffrfdj")
 }
 app.get("/",(req,res)=>{
-  res.json({status:"Running.......",msg:"Audio fingerprinter running"});
+  res.json({status:"Running.......",msg:"FPCALC fingerprinter API running"});
 });
 app.post("/t",upload.single('photo'),async(req,res)=>{
   console.log(req.file)
@@ -77,7 +77,7 @@ app.get("/getFingerprint/:length",async(req,res)=>{
     return {type:"error",error:err}
   }
 })
-app.listen(9678,(err)=>{
+app.listen(process.env.PORT,(err)=>{
   if(err) return console.error(err)
   else console.log("Audio Fingerprint server running")
 })
